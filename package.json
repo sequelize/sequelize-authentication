@@ -2,7 +2,7 @@
   "name": "sequelize-authentication",
   "version": "0.0.0",
   "description": "A connect module for authentication against a database.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "node_modules/.bin/buster-test -c buster.js"
   },

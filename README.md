@@ -1,4 +1,60 @@
-sequelize-authentication
-========================
+# sequelize-authentication
 
 A connect module for authentication against a database.
+
+## Usage:
+
+```js
+var app            = express()
+  , authentication = require('sequelize-authentication')
+  , Sequelize      = require('sequelize')
+  , sequelize      = new Sequelize('database', 'user', 'password')
+
+app.configure(function() {
+  app.use(authentication(sequelize[, options]))
+})
+```
+
+Note: If you are serving static files (e.g. via `express.static`), make sure, that authentication is added afterwards.
+
+## Options
+
+The second parameter of the `authentication` function is an object with options.
+
+### via
+
+You can define, where the module will find the credentials.
+
+#### Credentials in the URL
+
+```js
+authentication(sequelize, { via: 'query' })
+```
+
+```console
+curl "http://localhost?user=username&password=password"
+```
+
+#### Credentials in the post body
+
+```js
+authentication(sequelize, { via: 'body' })
+```
+
+```console
+curl -d "user=username&password=password" "http://localhost
+```
+
+#### Credentials in the headers
+
+```js
+authentication(sequelize, { via: 'headers' })
+```
+
+```console
+curl -d "user=username&password=password" "http://localhost
+```
+
+## Hm? So, what's next?
+
+Each request to your server will check
