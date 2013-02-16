@@ -42,7 +42,21 @@ authentication(sequelize, { via: 'body' })
 ```
 
 ```console
-curl -d "user=username&password=password" "http://localhost
+curl -d "user=username&password=password" http://localhost
+```
+
+#### Credentials in the params
+
+```js
+authentication(sequelize, { via: 'params' })
+```
+
+```console
+# works for params in the query
+curl "http://localhost?user=username&password=password"
+
+# and for params in the post body
+curl -d "user=username&password=password" http://localhost
 ```
 
 #### Credentials in the headers
@@ -52,7 +66,7 @@ authentication(sequelize, { via: 'headers' })
 ```
 
 ```console
-curl -d "user=username&password=password" "http://localhost
+curl -d "user=username&password=password" http://localhost
 ```
 
 ## Hm? So, what's next?

@@ -19,6 +19,14 @@ describe('sequelize-authentication', function() {
     title:         'authentication data in headers',
     via:           'headers',
     dataAttribute: 'headers'
+  }, {
+    title:         'authentication data in the query with params mode',
+    via:           'params',
+    dataAttribute: 'query'
+  }, {
+    title:         'authentication data in the post body with params mode',
+    via:           'params',
+    dataAttribute: 'body'
   }]
 
   tests.forEach(function(test) {
@@ -28,7 +36,7 @@ describe('sequelize-authentication', function() {
       })
 
       it('raises an error if authentication fails', function(done) {
-        var options = { headers: {} }
+        var options = { headers: {}, query: {}, body: {} }
         options[test.dataAttribute] = { user: uuid.v1(), password: uuid.v1() }
 
         this.authenticate(options, {
