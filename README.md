@@ -117,7 +117,7 @@ Credentials are in the body of the request only.
 
 ## Hm? So, what's next?
 
-Each request to your server will check
+The server will send each request through the authentication module. If the request authenticates correctly, it will be passed to the router. If authentication fails, the module will response with a 401 and the message 'Unauthorized'.
 
 ## License
 Hereby placed under MIT license.
