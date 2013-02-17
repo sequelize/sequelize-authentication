@@ -16,7 +16,8 @@ app.configure(function(){
   // app.use(authenticate(sequelize, { via: 'query' }))
   // app.use(authenticate(sequelize, { via: 'body' }))
   // app.use(authenticate(sequelize, { via: 'params' }))
-  app.use(authenticate(sequelize, { via: 'headers' }))
+  // app.use(authenticate(sequelize, { via: 'headers' }))
+  app.use(authenticate(sequelize, { via: 'params', scope: '/api' }))
   app.use(app.router)
 })
 
@@ -25,6 +26,10 @@ app.get('/', function(req, res, next) {
 })
 
 app.post('/', function(req, res, next) {
+  res.send('hello world')
+})
+
+app.get('/api/secret', function(req, res, next) {
   res.send('hello world')
 })
 

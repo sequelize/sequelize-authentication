@@ -32,11 +32,11 @@ that delivers `hello world` if the a user has authenticated successfully for the
 might want to check the example application under `example/app.js`. My local database has a `root` user 
 without password.
 
-### via
+### Option: `via`
 
 `via` defines, where the module will find the credentials.
 
-#### Credentials in the params
+#### Credentials in the params (default)
 
 	authentication(sequelize, { via: 'params' })
 
@@ -114,6 +114,23 @@ Credentials are in the body of the request only.
 	
 	curl -d "user=root&password=fnord" "http://localhost:3000"
 	# => Unauthorized
+
+### Option: `scope`
+
+`scope` defines, which urls should receive protection via the module.
+
+	authentication(sequelize, { scope: '/api' })
+
+This will protect each url that starts with `/api`.
+
+	curl http://localhost:3000
+	# => hello world
+	
+	curl http://localhost:3000/api/secret
+	# => Unauthorized
+
+	curl http://localhost:3000/api/secret?user=root&password=
+	# => hello world
 
 ## Hm? So, what's next?
 
