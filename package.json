@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git://github.com/sequelize/sequelize-authentication.git"
   },
-  "author": "",
-  "license": "BSD",
+  "author": "Sascha Depold",
+  "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
     "buster": "~0.6.12",
