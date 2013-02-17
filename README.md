@@ -9,72 +9,111 @@ The automated tests we talk about just so much are running on
 
 [![Build Status](https://secure.travis-ci.org/sequelize/sequelize-authentication.png)](http://travis-ci.org/sequelize/sequelize-authentication)
 
-## Usage:
+## Usage
 
-```js
-var app            = express()
-  , authentication = require('sequelize-authentication')
-  , Sequelize      = require('sequelize')
-  , sequelize      = new Sequelize('database', 'user', 'password')
+	var app            = express()
+	  , authentication = require('sequelize-authentication')
+	  , Sequelize      = require('sequelize')
+	  , sequelize      = new Sequelize('database', 'user', 'password')
+	
+	app.configure(function() {
+	  // express.static would go here
+	  app.use(authentication(sequelize[, options]))
+	  // express router would go here
+	})
 
-app.configure(function() {
-  app.use(authentication(sequelize[, options]))
-})
-```
-
-Note: If you are serving static files (e.g. via `express.static`), make sure, that authentication is added afterwards.
+**Note:** If you are serving static files (e.g. via `express.static`), make sure, that authentication is added afterwards.
+Also you should make sure, that the router is added after the authentication module.
 
 ## Options
 
-The second parameter of the `authentication` function is an object with options.
+The second parameter of the `authentication` function is an object with options. Let's assume an application,
+that delivers `hello world` if the a user has authenticated successfully for the following description. You
+might want to check the example application under `example/app.js`. My local database has a `root` user 
+without password.
 
 ### via
 
-You can define, where the module will find the credentials.
-
-#### Credentials in the URL
-
-```js
-authentication(sequelize, { via: 'query' })
-```
-
-```console
-curl "http://localhost?user=username&password=password"
-```
-
-#### Credentials in the post body
-
-```js
-authentication(sequelize, { via: 'body' })
-```
-
-```console
-curl -d "user=username&password=password" http://localhost
-```
+`via` defines, where the module will find the credentials.
 
 #### Credentials in the params
 
-```js
-authentication(sequelize, { via: 'params' })
-```
+	authentication(sequelize, { via: 'params' })
 
-```console
-# works for params in the query
-curl "http://localhost?user=username&password=password"
+This will tell the module, that the credentials are either in the URL of the request or the body (POST).
+If you don't want to use headers, this is most likely what you want.
 
-# and for params in the post body
-curl -d "user=username&password=password" http://localhost
-```
+	curl "http://localhost:3000?user=root&password="
+	# => hello world
+
+	curl "http://localhost:3000?user=root&password=fnord"
+	# => Unauthorized
+	
+	curl -d "user=root&password=" "http://localhost:3000"
+	# => hello world
+
+	curl -d "user=root&password=fnord" "http://localhost:3000"
+	# => Unauthorized
 
 #### Credentials in the headers
 
-```js
-authentication(sequelize, { via: 'headers' })
-```
+	authentication(sequelize, { via: 'headers' })
 
-```console
-curl -d "user=username&password=password" http://localhost
-```
+This defines, that the credentials are in the headers of the request.
+
+	curl "http://localhost:3000?user=root&password="
+	# => Unauthorized
+
+	curl "http://localhost:3000?user=root&password=fnord"
+	# => Unauthorized
+	
+	curl -d "user=root&password=" "http://localhost:3000"
+	# => Unauthorized
+	
+	curl -d "user=root&password=fnord" "http://localhost:3000"
+	# => Unauthorized
+	
+	curl -H "user: root" -H "password: " http://localhost:3000
+	# => hello world
+	
+	curl -H "user: root" -H "password: fnord" http://localhost:3000
+	# => Unauthorized
+
+#### Credentials in the URL
+
+	authentication(sequelize, { via: 'query' })
+
+Credentials are in the URL of the request only.
+
+	curl "http://localhost:3000?user=root&password="
+	# => hello world
+	
+	curl "http://localhost:3000?user=root&password=fnord"
+	# => Unauthorized
+	
+	curl -d "user=root&password=" "http://localhost:3000"
+	# => Unauthorized
+
+	curl -d "user=root&password=fnord" "http://localhost:3000"
+	# => Unauthorized
+
+#### Credentials in the post body
+
+	authentication(sequelize, { via: 'body' })
+
+Credentials are in the body of the request only.
+
+	curl "http://localhost:3000?user=root&password="
+	# => Unauthorized
+	
+	curl "http://localhost:3000?user=root&password=fnord"
+	# => Unauthorized
+	
+	curl -d "user=root&password=" "http://localhost:3000"
+	# => hello world
+	
+	curl -d "user=root&password=fnord" "http://localhost:3000"
+	# => Unauthorized
 
 ## Hm? So, what's next?
 
