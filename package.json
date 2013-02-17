@@ -1,6 +1,6 @@
 {
   "name": "sequelize-authentication",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A connect module for authentication against a database.",
   "main": "lib/index.js",
   "scripts": {
