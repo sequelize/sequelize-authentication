@@ -132,6 +132,17 @@ This will protect each url that starts with `/api`.
 	curl http://localhost:3000/api/secret?user=root&password=
 	# => hello world
 
+### Option: `param`
+
+`param` defines a parameter name which scopes the credentials. The default is none.
+
+	authentication(sequelize, { param: 'credentials' })
+
+The module will now check, if the credentials are located in the credentials object.
+
+	curl "http://localhost:3000?credentials\[user\]=root&credentials\[password\]="
+	# => hello world
+
 ## Hm? So, what's next?
 
 The server will send each request through the authentication module. If the request authenticates correctly, it will be passed to the router. If authentication fails, the module will response with a 401 and the message 'Unauthorized'.

@@ -17,7 +17,8 @@ app.configure(function(){
   // app.use(authenticate(sequelize, { via: 'body' }))
   // app.use(authenticate(sequelize, { via: 'params' }))
   // app.use(authenticate(sequelize, { via: 'headers' }))
-  app.use(authenticate(sequelize, { via: 'params', scope: '/api' }))
+  // app.use(authenticate(sequelize, { via: 'params', scope: '/api' }))
+  app.use(authenticate(sequelize, { via: 'params', param: 'credentials' }))
   app.use(app.router)
 })
 
