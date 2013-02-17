@@ -72,3 +72,6 @@ curl -d "user=username&password=password" http://localhost
 ## Hm? So, what's next?
 
 Each request to your server will check
+
+## License
+Hereby placed under MIT license.
