@@ -9,30 +9,30 @@ buster.spec.expose()
 describe('sequelize-authentication', function() {
   var tests = [{
     title:         'authentication data in query',
-    via:           'query',
+    options:       { via: 'query' },
     dataAttribute: 'query'
   }, {
     title:         'authentication data in post body',
-    via:           'body',
+    options:       { via: 'body' },
     dataAttribute: 'body'
   }, {
     title:         'authentication data in headers',
-    via:           'headers',
+    options:       { via: 'headers' },
     dataAttribute: 'headers'
   }, {
     title:         'authentication data in the query with params mode',
-    via:           'params',
+    options:       { via: 'params' },
     dataAttribute: 'query'
   }, {
     title:         'authentication data in the post body with params mode',
-    via:           'params',
+    options:       { via: 'params' },
     dataAttribute: 'body'
   }]
 
   tests.forEach(function(test) {
     describe(test.title, function() {
       before(function() {
-        this.authenticate = Authentication(sequelize, { via: test.via })
+        this.authenticate = Authentication(sequelize, test.options)
       })
 
       it('raises an error if authentication fails', function(done) {
@@ -51,11 +51,43 @@ describe('sequelize-authentication', function() {
         var options = { headers: {} }
         options[test.dataAttribute] = { user: 'root', password: '' }
 
-        this.authenticate(options, {}, function(){
+        this.authenticate(options, {}, function() {
           expect(1).toEqual(1)
           done()
         })
       })
     })
   }.bind(this))
+
+  describe('scope option', function() {
+    before(function() {
+      this.authenticate = Authentication(sequelize, { via: 'params', scope: '/scope' })
+    })
+
+    it('ignores missing credentials for urls which are out of scope', function(done) {
+      this.authenticate({ headers: {}, query: {}, body: {}, path: '/' }, {}, function() {
+        expect(1).toEqual(1)
+        done()
+      })
+    })
+
+    it('raises an error if credentials are wrong within the scope', function(done) {
+      this.authenticate({ headers: {}, query: { user: uuid.v1(), password: uuid.v1() }, body: {}, path: '/scope/fnord' }, {
+        end: function(msg) {
+          expect(msg).toEqual('Unauthorized')
+          done()
+        }
+      }, function() {
+        expect(1).toEqual(1)
+        done()
+      })
+    })
+
+    it('calls the passed function if credentials are correct', function(done) {
+      this.authenticate({ headers: {}, query: { user: 'root', password: '' }, body: {}, path: '/scope/fnord' }, {}, function() {
+        expect(1).toEqual(1)
+        done()
+      })
+    })
+  })
 })
