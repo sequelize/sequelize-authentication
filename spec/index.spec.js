@@ -2,7 +2,7 @@ var buster         = require('buster')
   , Authentication = require(__dirname + '/../lib/index')
   , uuid           = require('node-uuid')
   , Sequelize      = require('sequelize')
-  , sequelize      = new Sequelize('sequelize_test', 'root', null, { logging: false })
+  , sequelize      = new Sequelize('sequelize_authentication', 'root', null, { logging: false })
 
 buster.spec.expose()
 

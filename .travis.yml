@@ -1,3 +1,6 @@
+before_script:
+  - mysql -e 'create database sequelize_authentication;'
+
 script:
   - "npm test"
 
