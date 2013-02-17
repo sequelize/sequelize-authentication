@@ -1,0 +1,19 @@
+{
+  "name": "sequelize-authentication",
+  "version": "0.1.0",
+  "description": "A connect module for authentication against a database.",
+  "main": "app.js",
+  "scripts": {
+    "test": "node_modules/.bin/buster-test -c buster.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sequelize/sequelize-authentication.git"
+  },
+  "author": "Sascha Depold",
+  "license": "MIT",
+  "dependencies": {
+    "sequelize": "~1.6.0-beta4",
+    "express": "~3.1.0"
+  }
+}
