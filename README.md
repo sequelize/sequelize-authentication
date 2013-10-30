@@ -1,13 +1,6 @@
-# sequelize-authentication
+# sequelize-authentication [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sequelize/sequelize-authentication/trend.png)](https://bitdeli.com/free "Bitdeli Badge") [![Build Status](https://secure.travis-ci.org/sequelize/sequelize-authentication.png)](http://travis-ci.org/sequelize/sequelize-authentication)
 
 A connect module for authentication against a database.
-
-## Build status
-
-The automated tests we talk about just so much are running on
-[Travis public CI](http://travis-ci.org), here is its status:
-
-[![Build Status](https://secure.travis-ci.org/sequelize/sequelize-authentication.png)](http://travis-ci.org/sequelize/sequelize-authentication)
 
 ## Usage
 
