@@ -1,5 +1,7 @@
 # sequelize-authentication [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sequelize/sequelize-authentication/trend.png)](https://bitdeli.com/free "Bitdeli Badge") [![Build Status](https://secure.travis-ci.org/sequelize/sequelize-authentication.png)](http://travis-ci.org/sequelize/sequelize-authentication)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/sequelize/sequelize-authentication.svg)](https://greenkeeper.io/)
+
 A connect module for authentication against a database.
 
 ## Usage
